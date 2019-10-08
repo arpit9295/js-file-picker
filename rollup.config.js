@@ -14,12 +14,12 @@ const config = {
     {
       file: 'build/index.js',
       format: 'umd',
-      name: 'js-date-picker',
+      name: 'js-file-picker',
     },
     {
       file: 'build/index.cjs.js',
       format: 'cjs',
-      name: 'js-date-picker',
+      name: 'js-file-picker',
     },
     {
       file: 'build/index.esm.js',
