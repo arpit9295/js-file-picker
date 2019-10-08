@@ -1,7 +1,7 @@
-function openFilePicker(options = {}) {
+function openFilePicker(cloakStyle, options = {}) {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
-  fileInput.style = 'visibility: hidden; position: absolute; bottom: 0;';
+  fileInput.style = cloakStyle;
 
   Object.keys(options).forEach((attribute) => {
     fileInput.setAttribute(attribute, options[attribute]);
