@@ -1,18 +1,18 @@
-import openFilePicker from './openFilePicker';
+import pickFile from './pickFile';
 
 const config = {
   cloakStyle: 'opacity: 0; position: absolute; bottom: 0;',
 };
 
-function open(...args) {
-  return openFilePicker(config.cloakStyle, ...args);
+function pick(...args) {
+  return pickFile(config.cloakStyle, ...args);
 }
 
 export {
-  open as openFilePicker,
+  pick as pickFile,
 };
 
 export default {
   config,
-  open,
+  pick,
 };

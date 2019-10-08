@@ -1,15 +1,22 @@
 {
-  "name": "js-file-picker",
-  "version": "1.0.0",
-  "description": "A bare-bones library to open file picker programatically.",
-  "keywords": [],
-  "homepage": "https://github.com/arpit9295/js-file-picker#readme",
+  "name": "js-pick-file",
+  "version": "1.0.4",
+  "description": "A bare-bones vanilla library to open file picker programatically.",
+  "keywords": [
+    "file",
+    "picker",
+    "pick",
+    "input",
+    "filepicker",
+    "promise"
+  ],
+  "homepage": "https://github.com/arpit9295/js-pick-file#readme",
   "bugs": {
-    "url": "https://github.com/arpit9295/js-file-picker/issues"
+    "url": "https://github.com/arpit9295/js-pick-file/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arpit9295/js-file-picker.git"
+    "url": "git+https://github.com/arpit9295/js-pick-file.git"
   },
   "license": "",
   "author": {
@@ -75,6 +82,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "_id": "js-file-picker@0.9.0",
-  "readme": "https://github.com/arpit9295/js-file-picker#readme"
+  "readme": "https://github.com/arpit9295/js-pick-file#readme"
 }
