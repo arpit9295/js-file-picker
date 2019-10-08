@@ -1,3 +1,9 @@
-const foo = () => 'foo';
+import openFilePicker from './openFilePicker';
 
-export default foo;
+export {
+  openFilePicker,
+};
+
+export default {
+  open: openFilePicker,
+};
