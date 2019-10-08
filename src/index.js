@@ -1,11 +1,11 @@
 import openFilePicker from './openFilePicker';
 
 const config = {
-  cloakStyle: 'visibility: hidden; position: absolute; bottom: 0;',
+  cloakStyle: 'opacity: 0; position: absolute; bottom: 0;',
 };
 
 function open(...args) {
-  openFilePicker(config.cloakStyle, ...args);
+  return openFilePicker(config.cloakStyle, ...args);
 }
 
 export {
