@@ -12,7 +12,7 @@ function openFilePicker(cloakStyle, options = {}) {
   fileInput.click();
 
   return new Promise((resolve, reject) => {
-    fileInput.addEventListener('focus', () => {
+    function checkFiles() {
       if (fileInput.files.length) {
         document.body.removeChild(fileInput);
         resolve(fileInput.files);
@@ -20,7 +20,9 @@ function openFilePicker(cloakStyle, options = {}) {
         document.body.removeChild(fileInput);
         reject(fileInput.files);
       }
-    });
+    }
+    fileInput.addEventListener('focus', checkFiles);
+    fileInput.addEventListener('change', checkFiles);
   });
 }
 

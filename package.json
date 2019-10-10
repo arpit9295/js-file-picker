@@ -1,6 +1,6 @@
 {
   "name": "js-pick-file",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A bare-bones vanilla library to open file picker programatically.",
   "keywords": [
     "file",
