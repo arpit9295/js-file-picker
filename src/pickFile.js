@@ -13,12 +13,17 @@ function openFilePicker(cloakStyle, options = {}) {
 
   return new Promise((resolve, reject) => {
     function checkFiles() {
+      fileInput.removeEventListener('focus', checkFiles);
+      fileInput.removeEventListener('change', checkFiles);
+
       if (fileInput.files.length) {
-        document.body.removeChild(fileInput);
         resolve(fileInput.files);
       } else {
-        document.body.removeChild(fileInput);
         reject(fileInput.files);
+      }
+
+      if (fileInput.parentNode === document.body) {
+        document.body.removeChild(fileInput);
       }
     }
     fileInput.addEventListener('focus', checkFiles);
