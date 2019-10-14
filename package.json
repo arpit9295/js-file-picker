@@ -18,9 +18,11 @@
     "type": "git",
     "url": "git+https://github.com/arpit9295/js-pick-file.git"
   },
-  "license": "",
+  "license": "MIT",
   "author": {
-    "name": "arpit9295@gmail.com"
+    "name": "Arpit Roopchandani",
+    "email": "arpit9295@gmail.com",
+    "url": "https://github.com/arpit9295"
   },
   "files": [
     "build"
