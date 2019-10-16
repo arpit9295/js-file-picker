@@ -10,16 +10,20 @@ import { terser } from 'rollup-plugin-terser';
 
 const config = {
   input: 'src/index.js',
+  external: ['lodash.debounce'],
   output: [
     {
       file: 'build/index.js',
       format: 'umd',
       name: 'js-pick-file',
+      exports: 'named',
+      globals: ['debounce'],
     },
     {
       file: 'build/index.cjs.js',
       format: 'cjs',
       name: 'js-pick-file',
+      exports: 'named',
     },
     {
       file: 'build/index.esm.js',

@@ -1,3 +1,5 @@
+import debounce from 'lodash.debounce';
+
 function openFilePicker(cloakStyle, options = {}) {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
@@ -13,21 +15,21 @@ function openFilePicker(cloakStyle, options = {}) {
 
   return new Promise((resolve, reject) => {
     function checkFiles() {
-      fileInput.removeEventListener('focus', checkFiles);
-      fileInput.removeEventListener('change', checkFiles);
-
-      if (fileInput.files.length) {
-        resolve(fileInput.files);
+      if (this.files.length) {
+        resolve(this.files);
       } else {
-        reject(fileInput.files);
+        reject(this.files);
       }
 
-      if (fileInput.parentNode === document.body) {
-        document.body.removeChild(fileInput);
+      if (this.parentNode === document.body) {
+        document.body.removeChild(this);
       }
     }
-    fileInput.addEventListener('focus', checkFiles);
-    fileInput.addEventListener('change', checkFiles);
+
+    const eventListener = debounce(checkFiles, 100);
+
+    fileInput.addEventListener('focus', eventListener, { once: true });
+    fileInput.addEventListener('change', eventListener, { once: true });
   });
 }
 

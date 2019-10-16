@@ -1,6 +1,6 @@
 {
   "name": "js-pick-file",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A bare-bones vanilla library to open file picker programatically.",
   "keywords": [
     "file",
@@ -51,7 +51,9 @@
       "<rootDir>/node_modules/"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.54",
     "@babel/core": "^7.0.0-beta.54",
@@ -84,5 +86,6 @@
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
   "readme": "https://github.com/arpit9295/js-pick-file#readme"
 }
