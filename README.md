@@ -4,6 +4,8 @@
 
 A bare-bones vanilla library to open file picker programatically.
 
+[Demo](https://codepen.io/arpit9295/full/QWWOogW)
+
 ## Install
 
 ```
