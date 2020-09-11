@@ -25,7 +25,8 @@
     "url": "https://github.com/arpit9295"
   },
   "files": [
-    "build"
+    "build",
+    "src"
   ],
   "main": "build/index.cjs.js",
   "module": "build/index.esm.js",
