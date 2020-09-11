@@ -26,7 +26,7 @@ function openFilePicker(cloakStyle, options = {}) {
       }
     }
 
-    const eventListener = debounce(checkFiles, 100);
+    const eventListener = debounce(checkFiles, 200);
 
     fileInput.addEventListener('focus', eventListener, { once: true });
     fileInput.addEventListener('change', eventListener, { once: true });
