@@ -15,6 +15,9 @@ function openFilePicker(cloakStyle, options = {}) {
 
   return new Promise((resolve, reject) => {
     function checkFiles() {
+      if (!this.parentElement) {
+        return;
+      }
       if (this.files.length) {
         resolve(this.files);
       } else {
@@ -26,10 +29,12 @@ function openFilePicker(cloakStyle, options = {}) {
       }
     }
 
-    const eventListener = debounce(checkFiles, 200);
+    const eventListener = function (e) {
+      window.setTimeout(checkFiles.bind(this, e), 200);
+    };
 
-    fileInput.addEventListener('focus', eventListener, { once: true });
-    fileInput.addEventListener('change', eventListener, { once: true });
+    fileInput.addEventListener('focus', eventListener);
+    fileInput.addEventListener('change', checkFiles);
   });
 }
 
