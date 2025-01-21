@@ -10,31 +10,36 @@ function openFilePicker(cloakStyle, options = {}) {
   });
 
   document.body.appendChild(fileInput);
-  fileInput.focus();
   fileInput.click();
 
   return new Promise((resolve, reject) => {
-    function checkFiles() {
-      if (!this.parentElement) {
-        return;
-      }
-      if (this.files.length) {
-        resolve(this.files);
-      } else {
-        reject(this.files);
-      }
-
-      if (this.parentNode === document.body) {
-        document.body.removeChild(this);
+    function cleanup() {
+      // Always cleanup input if it's still in the document
+      if (fileInput.parentNode === document.body) {
+        document.body.removeChild(fileInput);
       }
     }
 
-    const eventListener = function (e) {
-      window.setTimeout(checkFiles.bind(this, e), 200);
-    };
+    fileInput.addEventListener('change', function(e) {
+      if (this.files.length) {
+        resolve(this.files);
+      } else {
+        reject(new Error('No files selected'));
+      }
+      cleanup();
+    });
 
-    fileInput.addEventListener('focus', eventListener);
-    fileInput.addEventListener('change', checkFiles);
+    // Handle the case where the file picker is canceled
+    window.addEventListener('focus', function onBlur() {
+      // Use a small timeout to ensure the change event fires first if a file was selected
+      setTimeout(() => {
+        if (fileInput.parentNode === document.body && !fileInput.files.length) {
+          reject(new Error('No files selected'));
+          cleanup();
+        }
+        window.removeEventListener('focus', onBlur);
+      }, 300);
+    }, { once: true });
   });
 }
 
