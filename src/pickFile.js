@@ -9,32 +9,45 @@ function openFilePicker(cloakStyle, options = {}) {
     fileInput.setAttribute(attribute, options[attribute]);
   });
 
-  document.body.appendChild(fileInput);
-  fileInput.focus();
-  fileInput.click();
-
   return new Promise((resolve, reject) => {
-    function checkFiles() {
-      if (!this.parentElement) {
-        return;
-      }
-      if (this.files.length) {
-        resolve(this.files);
-      } else {
-        reject(this.files);
-      }
+    const cleanup = () => {
+      // Clean up event listeners
+      fileInput.removeEventListener('change', handleChange);
+      fileInput.removeEventListener('blur', handleBlur);
 
-      if (this.parentNode === document.body) {
-        document.body.removeChild(this);
+      // Remove from DOM if still attached
+      if (fileInput.parentNode === document.body) {
+        document.body.removeChild(fileInput);
       }
-    }
-
-    const eventListener = function (e) {
-      window.setTimeout(checkFiles.bind(this, e), 200);
     };
 
-    fileInput.addEventListener('focus', eventListener);
-    fileInput.addEventListener('change', checkFiles);
+    const handleChange = () => {
+      if (fileInput.files.length) {
+        resolve(fileInput.files);
+      } else {
+        reject(new Error('No files selected'));
+      }
+      cleanup();
+    };
+
+    const handleBlur = () => {
+      // Only cleanup on blur if no files were selected
+      if (!fileInput.files.length) {
+        cleanup();
+        reject(new Error('File selection cancelled'));
+      }
+    };
+
+    fileInput.addEventListener('change', handleChange);
+    fileInput.addEventListener('blur', handleBlur);
+
+    // Append to body and trigger click with small delay
+    document.body.appendChild(fileInput);
+    
+    // Use setTimeout to ensure proper event sequencing
+    setTimeout(() => {
+      fileInput.click();
+    }, 100);
   });
 }
 
