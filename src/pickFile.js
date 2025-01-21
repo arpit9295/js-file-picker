@@ -10,32 +10,31 @@ function openFilePicker(cloakStyle, options = {}) {
   });
 
   document.body.appendChild(fileInput);
-  fileInput.focus();
-  fileInput.click();
+
+  // Use setTimeout to ensure proper initialization before clicking
+  setTimeout(() => fileInput.click(), 50);
 
   return new Promise((resolve, reject) => {
-    function checkFiles() {
+    function checkFiles(e) {
       if (!this.parentElement) {
         return;
       }
-      if (this.files.length) {
-        resolve(this.files);
-      } else {
-        reject(this.files);
-      }
+      
+      // Give macOS more time to process the file selection
+      setTimeout(() => {
+        if (this.files.length) {
+          resolve(this.files);
+        } else {
+          reject(this.files);
+        }
 
-      if (this.parentNode === document.body) {
-        document.body.removeChild(this);
-      }
+        if (this.parentNode === document.body) {
+          document.body.removeChild(this);
+        }
+      }, 500);
     }
 
-    const eventListener = function (e) {
-      window.setTimeout(checkFiles.bind(this, e), 200);
-    };
-
-    fileInput.addEventListener('focus', eventListener);
     fileInput.addEventListener('change', checkFiles);
-  });
 }
 
 export default openFilePicker;
