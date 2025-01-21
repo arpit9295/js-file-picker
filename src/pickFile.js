@@ -9,10 +9,6 @@ function openFilePicker(cloakStyle, options = {}) {
     fileInput.setAttribute(attribute, options[attribute]);
   });
 
-  document.body.appendChild(fileInput);
-  fileInput.focus();
-  fileInput.click();
-
   return new Promise((resolve, reject) => {
     function checkFiles() {
       if (!this.parentElement) {
@@ -35,6 +31,9 @@ function openFilePicker(cloakStyle, options = {}) {
 
     fileInput.addEventListener('focus', eventListener);
     fileInput.addEventListener('change', checkFiles);
+
+    document.body.appendChild(fileInput);
+    setTimeout(() => fileInput.click(), 0);
   });
 }
 
