@@ -3,38 +3,62 @@ import { debounce } from 'underscore';
 function openFilePicker(cloakStyle, options = {}) {
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
-  fileInput.style = cloakStyle;
+  
+  // Set default positioning styles for better MacOS compatibility
+  const defaultStyle = 'position: fixed; top: -1000px; left: -1000px; opacity: 0;';
+  fileInput.style = `${defaultStyle} ${cloakStyle || ''}`;
 
   Object.keys(options).forEach((attribute) => {
     fileInput.setAttribute(attribute, options[attribute]);
   });
 
   document.body.appendChild(fileInput);
-  fileInput.focus();
   fileInput.click();
 
   return new Promise((resolve, reject) => {
-    function checkFiles() {
-      if (!this.parentElement) {
-        return;
-      }
-      if (this.files.length) {
-        resolve(this.files);
-      } else {
-        reject(this.files);
-      }
-
-      if (this.parentNode === document.body) {
-        document.body.removeChild(this);
+    let isHandled = false;
+    
+    function cleanup() {
+      if (fileInput.parentNode === document.body) {
+        document.body.removeChild(fileInput);
       }
     }
 
-    const eventListener = function (e) {
-      window.setTimeout(checkFiles.bind(this, e), 200);
-    };
+    function handleFiles() {
+      if (isHandled) {
+        return;
+      }
+      isHandled = true;
 
-    fileInput.addEventListener('focus', eventListener);
-    fileInput.addEventListener('change', checkFiles);
+      if (this.files && this.files.length) {
+        resolve(this.files);
+      } else {
+        reject(new Error('No files selected'));
+      }
+      
+      cleanup();
+    }
+
+    // Handle the cancel case
+    function handleCancel() {
+      if (isHandled) {
+        return;
+      }
+      isHandled = true;
+      
+      reject(new Error('File selection cancelled'));
+      cleanup();
+    }
+
+    fileInput.addEventListener('change', handleFiles);
+    
+    // Handle the case when user cancels the selection
+    // We need to detect when the dialog closes without a selection
+    window.setTimeout(function() {
+      if (!isHandled) {
+        handleCancel();
+      }
+    }, 1000);
   });
 }
 
